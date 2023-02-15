@@ -1,0 +1,21 @@
+{% extends "root.html" %}
+{% load static %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'styles/ticket/ticket-register.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="ticket-registration-wrapper">
+    <div class="ticket-registration col-12 col-md-7 col-lg-5">
+        <h1 class="text-center">Registrer ticket</h1>
+        <hr>
+        <form action="ticket/register" method="POST" class="ticket-registration-form">
+            {% csrf_token %}
+            {{ form }}
+            <button class="btn btn-success mt-3">Send inn</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,24 @@
+.ticket-registration-wrapper {
+    padding-top: 50vh; /* Skyv formen ned halve skjermen */
+}
+
+.ticket-registration {
+    transform: translate(-50%, -50%); /* Flytt ankeret til registrasjons-divisjonen til midten */
+    margin-left: 50%;
+}
+
+.ticket-registration-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.ticket-registration-form > label {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.ticket-registration-form > input, textarea {
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 5px;
+}
