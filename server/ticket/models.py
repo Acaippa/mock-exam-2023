@@ -8,7 +8,8 @@ class Avdeling(models.Model):
         verbose_name_plural = "Avdelinger"
 
 def get_default_avdeling():
-    return Avdeling.objects.filter(Navn="Tildelning")
+    default = Avdeling.objects.filter(Navn="Tildelning")
+    return default[0] if len(default) != 0 else None
 
 class Status(models.Model):
     Navn = models.CharField(max_length=60)
@@ -19,7 +20,8 @@ class Status(models.Model):
 
 
 def get_default_status():
-    return Status.objects.filter(Navn="Åpen")
+    default = Status.objects.filter(Navn="Åpen")
+    return default[0] if len(default) != 0 else None
 
 class Teknikker(models.Model):
     Navn = models.CharField(max_length=100)
@@ -38,4 +40,4 @@ class Ticket(models.Model):
     Tildelt = models.ForeignKey(Teknikker, on_delete=models.DO_NOTHING, null=True, blank=True)
     Tildelt_avdeling = models.ForeignKey(Avdeling, on_delete=models.DO_NOTHING, default=get_default_avdeling, null=True, blank=True)
     Dato_lagd = models.DateField(auto_now_add=True)
-    Status = models.ForeignKey(Status, default=get_default_status, on_delete=models.DO_NOTHING, null=True, blank=True)
+    Status = models.ForeignKey(Status, default=get_default_status, on_delete=models.DO_NOTHING, blank=True)

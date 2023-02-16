@@ -10,6 +10,29 @@ body {
     height: 100%;
 }
 
+
+.message {
+    position: absolute;
+    animation: message 1s forwards;
+    background-color: rgb(84, 150, 18);
+    border-radius: 5px;
+}
+
+.message > p {
+    margin: 10px;
+    color: white;
+}
+
+@keyframes message {
+    from {
+        top: -30px;
+    }
+
+    to {
+        top: 20px;
+    }
+}
+
 @media (width < 768px) {
     .main-container {
         padding-right: 5%;
