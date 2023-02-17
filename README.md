@@ -72,7 +72,7 @@ Ved å kun trykke på enten Statuser, eller Tickets, vil du kunne se en oversikt
 Her forklares det hvordan man kan legge til nye enheter i databasen
 ## Definer modellen i models.py
 
-inne i server > tickets > models.py vil du finne en python representasjon av modellene i databasen. Referer til https://docs.djangoproject.com/en/4.1/ref/models/fields/ for en dybdeforklaring.
+inne i ``server > ticket > models.py`` vil du finne en python representasjon av modellene i databasen. Referer til https://docs.djangoproject.com/en/4.1/ref/models/fields/ for en dybdeforklaring.
 
 For å lage en ny modell, må man lage en klasse som arver egenskapende til en innebygd modul i Django.
 
@@ -87,3 +87,12 @@ Over ser du Status modellen som blir brukt i nettsiden.
 
 For at Django nå skal legge til den nye modellen i Databasen, må du gå inn i ``Consollen`` og ``CD`` inn i plasseringen til ``manage.py`` filen. 
 Deretter må kommandoen ``python manage.py makemigrations`` og ``pyhton manage.py migrate`` kjøres for at databasen skal oppdatere seg. Dette må gjøres hver gang man endrer på noe i models.py filen.
+
+## Registrer Modellen i Admin.py
+I ``server > ticket > Admin.py`` kan du gjøre slik at man kan se modellen og lage nye enheter i databasen av dem i Admin panelet.
+
+
+![image](https://user-images.githubusercontent.com/106773288/219679607-10d086e1-8e7e-4110-acea-22fbdff69d5d.png)
+
+
+I bildet over starter vi med å importere Django's innebygde admin modul og vår egen modell fra ``server > ticket > models.py`` Deretter registrerer vi de med ``admin.site.register(navn_på_modell)`` funskjonen.
