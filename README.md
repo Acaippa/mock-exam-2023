@@ -1,6 +1,8 @@
 # innlevering prøveeksamen 2023
 Dette er min innlevering av Prøveeksamen 2023. Under vil du også finne brukerveiledning for nettsiden.
 
+NB! Noen av sidene på nettsiden må du være logget inn for å se, referer til ``brukernavn`` tillegget.
+
 ## Hvordan Logge seg inn som administrator
 **Om du vil legge til Brukere eller Grupper (avdelinger)** må du først gå inn på serverens hjemmeside. Deretter legge til /admin i URL'en. For eks. "localhost:8000/admin".
 I boksen som kommer opp skriver du inn ditt brukernavn og passord. (Det er per nå kun Administrator, Rune og Magnus som kan logge seg inn i admin siden)
