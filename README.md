@@ -96,3 +96,24 @@ I ``server > ticket > Admin.py`` kan du gjøre slik at man kan se modellen og la
 
 
 I bildet over starter vi med å importere Django's innebygde admin modul og vår egen modell fra ``server > ticket > models.py`` Deretter registrerer vi de med ``admin.site.register(navn_på_modell)`` funskjonen.
+
+## Lag ett view
+for at django skal kunne svare på en forespørsel så må du fortelle hva den skal gjøre. Dette gjøres ved å gå inn på ``server > ticket > views.py`` og skrive følgende
+
+
+![image](https://user-images.githubusercontent.com/106773288/219680720-8252038c-d9ea-4a70-92ba-756da03a3149.png)
+
+
+i linje 63 henter vi alle statuser i databaser, før vi returnerer en render funskjon hvor vi definerer navnet på HTML filen og Contexten, som kan bli hentet fram i HTML dokumentet. Via å bruke 
+
+``{% for status in statuses %} 
+    {{status.Navn}}
+  {% endfor %} ``
+  
+For binding av URL of View, referer til https://docs.djangoproject.com/en/4.1/intro/tutorial03/
+
+# Forklaring på Design.
+- hvorfor er det ingen forside?
+  Dette er grunnet at dette systemet er bygd opp slik at det kan kobles til en eksisterende nettside, hvorav man redirecter brukeren til registrer ticket URL'en. Det annbefales å ha en 0-linje support side, som hindrer brukere i å registrere en sak før de faktisk har prøvd å løse problemet selv.
+- Dashboardet
+  Dashboardet er bygget opp slik at man kan se viktig informasjon om Ticketen, med mye mellomrom for enkel lesning.
