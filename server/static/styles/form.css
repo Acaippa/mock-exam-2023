@@ -1,0 +1,30 @@
+.global-form-wrapper {
+    padding-top: 10vh; /* Skyv formen ned halve skjermen */
+}
+
+.global-form {
+    margin-left: 50%;
+    transform: translateX(-50%); Flytt ankeret til registrasjons-divisjonen til midten
+}
+
+.global-form > h1 {
+    text-align: center;
+}
+
+.global-form-form {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 2rem;
+}
+
+.global-form-form > label {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.global-form-form > input, textarea {
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 5px;
+    padding: 4px;
+}

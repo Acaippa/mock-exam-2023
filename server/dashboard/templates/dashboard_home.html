@@ -1,0 +1,84 @@
+{% extends "root.html" %}
+{% load static %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'styles/dashboard/dashboard.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="dashboard-wrapper">
+    <h1>Tickets</h1>
+    <hr class="mb-4">
+    <div class="filter-wrapper">
+        <form class="filter-form">
+            <div class="filter">
+                <label for="filter-select">Vis:</label>
+                <select class="form-select" name="filter-select" id="select-filter">
+                    <option value="åpne">Kun åpne</option>
+                </select>
+            </div>
+            <div class="filter">
+                <label for="sort-select">Sorter etter:</label>
+                <select class="form-select" name="sort-select" id="sort-filter">
+                    <option value="Dato_postet">Dato</option>
+                </select>
+            </div>
+        </form>
+        <button class="btn btn-success add-ticket-button" onclick="window.location.href='/ticket/register'">Legg til Ticket</button>
+    </div>
+
+    <div class="tickets-container">
+        <div class="select-all-wrapper">
+            <input name="select-all-check" class="form-check-input me-2" type="checkbox" id="select-all-checkbox" onchange="selectAllTickets()">
+            <label for="select-all-check">Velg alle Tickets</label>
+            <a onclick="deleteSelectedTickets()" class="text-danger ms-4 delete-selected">Slett valgte tickets</a>
+        </div>
+        {% for ticket in tickets %}
+            <div class="ticket-wrapper" onclick='checkClick(event, this, "/ticket/edit/{{ticket.id}}")' id="{{ticket.id}}">
+                <p class="ticket-date">{{ticket.Dato_lagd}}</p>
+                <div class="ticket">
+                    <input type="checkbox" class="form-check-input ticket-select">
+                    <p class="ticket-subject">{{ticket.Emne}}</p>    
+                    <p class="ticket-sender-name">{{ticket.Sender_navn}}</p>
+                    <p class="ticket-status">{{ticket.Status}}</p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+<script>
+    function checkClick(event, div, url) {
+        let checkBox = div.querySelector(".ticket-select")
+
+        if (event.target != checkBox) {
+            window.location.href = url
+        }
+    }
+
+    function selectAllTickets() {
+        let controlValue = document.querySelector("#select-all-checkbox").checked
+        let ticketCheck = document.querySelectorAll(".ticket-select")
+
+        ticketCheck.forEach(check => {
+            console.log(check)
+            check.checked = controlValue
+        })
+    }
+
+    function deleteSelectedTickets() {
+        let tickets = document.querySelectorAll(".ticket-wrapper")
+
+        let selectedTicketIds = []
+
+        tickets.forEach(ticket => {
+            if (ticket.querySelector(".ticket-select").checked == true){
+                selectedTicketIds.push(ticket.id)
+            }
+        })
+
+        if (selectedTicketIds.length != 0){
+            window.location.href = `/ticket/remove-r/${selectedTicketIds.join(",")}`
+        }
+    }
+</script>
+{% endblock %}

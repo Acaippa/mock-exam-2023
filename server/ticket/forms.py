@@ -17,3 +17,9 @@ class TicketForm(ModelForm):
             "Emne" : TextInput(attrs={"placeholder" : "Forklar problemet kort:"}),
             "Melding" : Textarea(attrs={"placeholder" : "Forklar problemet i detalj:"}),
         }
+
+
+class EditTicketForm(ModelForm):
+    class Meta:
+        model = Ticket
+        fields = '__all__'

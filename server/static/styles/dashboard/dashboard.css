@@ -1,0 +1,99 @@
+.dashboard-wrapper  {
+    padding-top: 10%;
+}
+
+.filter-wrapper, .filter-form {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+}
+
+.filter {
+    display: flex;
+    flex-direction: column;
+    padding-right: 25px;
+    font-weight: bolder;
+}
+
+.select-all-wrapper {
+    display: inline-flex;
+    flex-direction: row;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-bottom: 3rem;
+}
+
+.tickets-container  {
+    display: flex;
+    flex-direction: column;
+    margin-top: 1rem;
+}
+
+.ticket-wrapper {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 2rem;
+}
+
+.ticket{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+    padding: 15px;
+    border-radius: 5px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgb(0, 0, 0);
+    padding-left: 30px;
+    position: relative;
+    transition: all .5s;
+    cursor: pointer;
+}
+
+.ticket:hover{
+    background-color: rgba(211, 211, 211, 1);
+}
+
+.ticket > p{
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-right: 20px;
+    margin-left: 20px;
+    max-width: 30%;
+}
+
+.ticket-subject {
+    overflow: hidden;
+    font-weight: 500;
+}
+
+.ticket-date {
+    margin-bottom: 0;
+    font-style: italic;
+    overflow: hidden;
+}
+
+.ticket-sender-name {
+    opacity: 0.5;
+    font-weight: bold;
+    overflow: hidden;
+}
+
+.ticket-status {
+    font-weight: bold;
+}
+
+.ticket-select {
+    position: absolute;
+    left: 15px;
+}
+
+.delete-selected {
+    cursor: pointer;
+}
+
+.add-ticket-button {
+    height: 60%;
+    margin-top: auto;
+}

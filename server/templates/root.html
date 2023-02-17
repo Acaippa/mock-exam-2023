@@ -17,6 +17,11 @@
   </head>
   <body>
     <div class="main-container">
+        {% for message in messages %}
+          <div class="message">
+              <p>{{message}}</p>
+          </div>
+        {% endfor %}
         {% block content %}
         {% endblock %}
     </div>
