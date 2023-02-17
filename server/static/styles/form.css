@@ -4,7 +4,7 @@
 
 .global-form {
     margin-left: 50%;
-    transform: translateX(-50%); Flytt ankeret til registrasjons-divisjonen til midten
+    transform: translateX(-50%)
 }
 
 .global-form > h1 {

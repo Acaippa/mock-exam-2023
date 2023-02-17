@@ -1,16 +1,36 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.signals import user_logged_out, user_logged_in
 from django.dispatch import receiver
 from django.contrib import messages
 
-from ticket.models import Ticket
+from ticket.models import Ticket, Status
 
 # Create your views here.
 def home_view(request):
     return render(request, "index.html", {})
 
 def dashboard_home_view(request):
+    if request.user.is_authenticated == False:
+        return redirect("/accounts/login/")
+    
     tickets = Ticket.objects.all()
+
+    if request.method == "POST":
+        filter = request.POST["filter-select"]
+        filter_search = request.POST["filter-search"]
+        sort = request.POST["sort-select"]
+        
+        if filter != "":
+            filter_key, filter_value = filter.split(":")
+
+            tickets = tickets.filter(**{filter_key : filter_value})
+
+        if filter_search != "":
+
+            tickets = tickets.filter(**{"Emne__icontains" : filter_search})
+
+        if sort != "":
+            tickets = tickets.order_by(sort)
 
     return render(request, "dashboard_home.html", {"tickets" : tickets})
 

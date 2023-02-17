@@ -17,6 +17,17 @@
   </head>
   <body>
     <div class="main-container">
+      <div class="logo-wrapper">
+        <h2>Kjellvik & lundestad</h2>
+        <div class="navbar">
+          <Button class="btn btn-primary p-1 my-2" onclick="window.location.href = '/'">Hjem</Button>
+          <Button class="btn btn-primary p-1 my-2" onclick="window.location.href = '/accounts/login'">Logg Inn</Button>
+          <Button class="btn btn-primary p-1 my-2" onclick="window.location.href = '/accounts/logout'">Logg Ut</Button>
+          <Button class="btn btn-primary p-1 my-2" onclick="window.location.href = '/dashboard/home'">Dashboard</Button>
+          <Button class="btn btn-primary p-1 my-2" onclick="window.location.href = '/ticket/register'">Registrer Ticket</Button>
+
+        </div>
+      </div>
         {% for message in messages %}
           <div class="message">
               <p>{{message}}</p>

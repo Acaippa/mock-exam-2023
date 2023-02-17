@@ -1,13 +1,17 @@
 from django.shortcuts import render, redirect
 from .models import Ticket
 from .forms import TicketForm, EditTicketForm
-from django.contrib.auth.decorators import login_required
 
 
 from django.contrib import messages
 
+def check_if_logged_in(request):
+    if request.user.is_authenticated == False:
+        return redirect("/accounts/login/")
+
 # Create your views here.
 def ticket_register_view(request):
+    
     form = TicketForm()
 
     if request.method == "POST":
@@ -19,8 +23,10 @@ def ticket_register_view(request):
     return render(request, "ticket/register_ticket.html", {'form' : form}) # Ticket registrasjons siden
 
 
-@login_required(login_url="/accounts/login/")
+
 def ticket_edit_view(request, ticketId):
+    check_if_logged_in(request)
+    
     ticket = Ticket.objects.get(id=ticketId)
 
     form = EditTicketForm(instance=ticket)
@@ -34,16 +40,18 @@ def ticket_edit_view(request, ticketId):
 
     return render(request, "ticket/edit_ticket.html", {"form" : form, "ticketId" : ticketId})
 
-@login_required(login_url="/accounts/login/")
 def ticket_remove_view(request, ticketId):
+    check_if_logged_in(request)
+
     ticket = Ticket.objects.get(id=ticketId)
     ticket.delete()
     messages.add_message(request, messages.SUCCESS, "Ticket fjernet!", extra_tags="notification")
 
     return redirect("/")
 
-@login_required(login_url="/accounts/login/")
 def multiple_ticket_remove_view(request, ticketIds):
+    check_if_logged_in(request)
+
     for ticketId in ticketIds.split(","):
         ticket = Ticket.objects.get(id=ticketId)
         ticket.delete()

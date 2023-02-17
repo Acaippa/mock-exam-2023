@@ -10,19 +10,29 @@
     <h1>Tickets</h1>
     <hr class="mb-4">
     <div class="filter-wrapper">
-        <form class="filter-form">
+        <form class="filter-form" method="POST">
+            {% csrf_token %}
             <div class="filter">
                 <label for="filter-select">Vis:</label>
-                <select class="form-select" name="filter-select" id="select-filter">
-                    <option value="åpne">Kun åpne</option>
+                <select class="form-select" name="filter-select" id="select-filter" onchange="this.form.submit()">
+                    <option value="" selected>-</option>
+                    <option value="Status__Navn:Åpen">Kun åpne</option>
+                    <option value="Status__Navn:Lukket">Kun lukket</option>
                 </select>
             </div>
             <div class="filter">
                 <label for="sort-select">Sorter etter:</label>
-                <select class="form-select" name="sort-select" id="sort-filter">
-                    <option value="Dato_postet">Dato</option>
+                <select class="form-select" name="sort-select" id="sort-filter" onchange="this.form.submit()">
+                    <option value="" selected>-</option>
+                    <option value="Dato_lagd">Dato stigende</option>
+                    <option value="-Dato_lagd">Dato synkende</option>
                 </select>
             </div>
+            <div class="filter">
+                <input class="filter-text form-control" name="filter-search" placeholder="Søk etter emne:" type="text">                
+            </div>
+            <button class="btn btn-primary filter-search">søk</button>
+            <a href="/dashboard/home" class="filter-reset">Reset Filtre</a>
         </form>
         <button class="btn btn-success add-ticket-button" onclick="window.location.href='/ticket/register'">Legg til Ticket</button>
     </div>

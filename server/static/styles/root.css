@@ -41,6 +41,18 @@ body {
     }
 }
 
+.logo-wrapper {
+    position: absolute;
+    left: 0;
+    padding: 10px;
+}
+
+.navbar {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+
 @media (width < 768px) {
     .main-container {
         padding-right: 5%;

@@ -35,6 +35,10 @@
     margin-bottom: 2rem;
 }
 
+.filter-form {
+    width: 100%;
+}
+
 .ticket{
     display: flex;
     flex-direction: row;
@@ -93,7 +97,16 @@
     cursor: pointer;
 }
 
-.add-ticket-button {
+.add-ticket-button, .filter-search {
     height: 60%;
     margin-top: auto;
+}
+
+.filter-text {
+    margin-top: auto;
+}
+
+.filter-reset {
+    margin-top: auto;
+    margin-left: 2rem;
 }
