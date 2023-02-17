@@ -50,11 +50,33 @@ Skriv deretter inn navnet og trykk på SAVE for å lagre.
 
 
 ## Hvordan legge til nye statuser
+
+
 Start med å trykke på +ADD til høyre for Statuser
 
 
 ![image](https://user-images.githubusercontent.com/106773288/219675898-159e3593-f340-487b-81be-61e589d0fd46.png)
 
 
-
 Skriv deretter inn navnet på statusen og trykk på SAVE for å lagre. Ettersom farger på statuser ikke er implementert enda, kan du la denne stå som hvit.
+
+
+Ved å kun trykke på enten Statuser, eller Tickets, vil du kunne se en oversikt over alle enhetene av de i databasen. Trykk på en av de for å endre på en spesifik enhet.
+
+![image](https://user-images.githubusercontent.com/106773288/219676520-1c5ded47-60de-4cd2-8a6a-b6bcb9ab6ebc.png)
+
+### Legg til ny database enhet
+Her forklares det hvordan man kan legge til nye enheter i databasen
+## Definer modellen i models.py
+
+inne i server > tickets > models.py vil du finne en python representasjon av modellene i databasen. Referer til https://docs.djangoproject.com/en/4.1/ref/models/fields/ for en dybdeforklaring.
+
+For å lage en ny modell, må man lage en klasse som arver egenskapende til en innebygd modul i Django.
+
+
+![image](https://user-images.githubusercontent.com/106773288/219677610-44fca2b6-5d7e-44e0-9af1-301fb44dc976.png)
+
+
+Over ser du Status modellen som blir brukt i nettsiden.
+``__str__`` funskjonen blir brukt for å bestemme hvilket navn som skal vises i databaseoversikten når man ser på enheten.
+``Meta`` Underklassen har en funskjon som endrer pluralet til enhetsnavnet. Slik at det blir "stauser" og ikke "statuss".
