@@ -65,7 +65,10 @@ Ved å kun trykke på enten Statuser, eller Tickets, vil du kunne se en oversikt
 
 ![image](https://user-images.githubusercontent.com/106773288/219676520-1c5ded47-60de-4cd2-8a6a-b6bcb9ab6ebc.png)
 
-### Legg til ny database enhet
+
+# Legg til ny database enhet
+
+
 Her forklares det hvordan man kan legge til nye enheter i databasen
 ## Definer modellen i models.py
 
@@ -80,3 +83,7 @@ For å lage en ny modell, må man lage en klasse som arver egenskapende til en i
 Over ser du Status modellen som blir brukt i nettsiden.
 ``__str__`` funskjonen blir brukt for å bestemme hvilket navn som skal vises i databaseoversikten når man ser på enheten.
 ``Meta`` Underklassen har en funskjon som endrer pluralet til enhetsnavnet. Slik at det blir "stauser" og ikke "statuss".
+
+
+For at Django nå skal legge til den nye modellen i Databasen, må du gå inn i ``Consollen`` og ``CD`` inn i plasseringen til ``manage.py`` filen. 
+Deretter må kommandoen ``python manage.py makemigrations`` og ``pyhton manage.py migrate`` kjøres for at databasen skal oppdatere seg. Dette må gjøres hver gang man endrer på noe i models.py filen.
