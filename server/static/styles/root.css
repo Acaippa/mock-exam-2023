@@ -42,7 +42,7 @@ body {
 }
 
 .logo-wrapper {
-    position: absolute;
+    /* display: none; */
     left: 0;
     padding: 10px;
 }

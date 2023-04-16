@@ -1,1 +1,53 @@
 {% extends "root.html" %}
+{% load static %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{% static '/styles/helpdesk/index.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>FAQ</h1>
+    <p>Hei! Har du noen problemer? Sjekk ut våre ofte stilte spørsmål!</p>
+    <div class="faq-list-wrapper">
+
+        <div class="faq-list row">
+            {% for FAQ in FAQs %}
+
+                <div class="faq-card-wrapper col-4" onclick="revealCard({{FAQ.id}})">
+
+                    <div class="faq-card">
+                        <h2 class="faq-card-title">
+                            {{FAQ.Tittel}}
+                        </h2>
+                        <p class="faq-card-description">
+                            {{FAQ.Beskrivelse}}
+                        </p>
+                    </div>
+
+                </div>
+
+            {% endfor %}
+        </div>
+    </div>
+
+</div>
+{% for FAQ in FAQs %}
+    <div class="faq-card-detail-wrapper" id="{{FAQ.id}}" onclick="hideCard({{FAQ.id}})">
+
+        <div class="faq-card-detail">
+            <h2 class="faq-card-detail-title">
+                {{FAQ.Tittel}}
+            </h2>
+            <p class="faq-card-detail-description">
+                {{FAQ.Beskrivelse}}
+            </p>
+            <a class="text-center mt-5" href="/ticket/register">Finner du ikke svar på problemet ditt?</a>
+        </div>
+
+    </div>
+    {% endfor %}
+
+<script src="{% static '/scripts/FAQ.js' %}"></script>
+
+{% endblock %}

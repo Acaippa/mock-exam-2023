@@ -18,15 +18,21 @@
   <body>
     <div class="main-container">
       <div class="logo-wrapper">
-        <h2>Kjellvik & lundestad</h2>
-        <div class="navbar">
-          <Button class="btn btn-primary p-1 my-2" onclick="window.location.href = '/'">Hjem</Button>
-          <Button class="btn btn-primary p-1 my-2" onclick="window.location.href = '/accounts/login'">Logg Inn</Button>
-          <Button class="btn btn-primary p-1 my-2" onclick="window.location.href = '/accounts/logout'">Logg Ut</Button>
-          <Button class="btn btn-primary p-1 my-2" onclick="window.location.href = '/dashboard/home'">Dashboard</Button>
-          <Button class="btn btn-primary p-1 my-2" onclick="window.location.href = '/ticket/register'">Registrer Ticket</Button>
+        <div class="row">
+          <h2 style="cursor: pointer;" onclick="window.location.href='/'">K&L</h2>
 
-        </div>
+          <div class="personel-icon-wrapper">
+
+            <div class="personel-dropdown row">
+              <a href="/dashboard/home">Dashbord</a>
+              {% if user.is_authenticated %}
+                <a href="/accounts/logout">Logg ut</a>
+              {% endif %}
+            </div>
+
+          </div>
+
+          </div>
       </div>
         {% for message in messages %}
           <div class="message">
@@ -36,5 +42,8 @@
         {% block content %}
         {% endblock %}
     </div>
+
+    <script src="{% static '/scripts/revealPersonel.js' %}"></script>
+
   </body>
 </html>

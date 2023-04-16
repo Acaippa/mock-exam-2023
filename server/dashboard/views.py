@@ -3,11 +3,12 @@ from django.contrib.auth.signals import user_logged_out, user_logged_in
 from django.dispatch import receiver
 from django.contrib import messages
 
-from ticket.models import Ticket, Status
+from ticket.models import Ticket
+from .models import FAQ
 
 # Create your views here.
 def home_view(request):
-    return render(request, "index.html", {})
+    return render(request, "index.html", {"FAQs" : FAQ.objects.all()})
 
 def dashboard_home_view(request):
     if request.user.is_authenticated == False:
