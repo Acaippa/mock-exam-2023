@@ -1,121 +1,120 @@
-# innlevering prøveeksamen 2023
-Dette er min innlevering av Prøveeksamen 2023. Under vil du også finne brukerveiledning for nettsiden.
+# K&L Ticket system - Prøveeksamen 2023
+Jeg har fått i oppgave å lage ett ticket-system for bedriften Kjelvik og Lundestad. Jeg har i den annledning brukt web-rammeverket Django. Denne dokumentasjonen vil ta for seg oppsettet til min Django applikasjon, og kort hvordan du kan utvidde databasen.
+Denne veiledningen er rettet mot nye utviklere, og det trengs medium kunnskaper om [Python](https://www.python.org/) sjekk gjerne ut [Python OOP](https://realpython.com/python3-object-oriented-programming/). Referer gjerne også til Django's dokumenasjon [her](https://docs.djangoproject.com/en/4.2/). En grunnleggende forståelse av HTML er også nødvendig. [HTML](https://www.w3schools.com/html/)
 
-NB! Noen av sidene på nettsiden må du være logget inn for å se, referer til ``brukernavn`` tillegget.
+## Beskrivelse av oppsett
 
-## Hvordan Logge seg inn som administrator
-**Om du vil legge til Brukere eller Grupper (avdelinger)** må du først gå inn på serverens hjemmeside. Deretter legge til /admin i URL'en. For eks. "localhost:8000/admin".
-I boksen som kommer opp skriver du inn ditt brukernavn og passord. (Det er per nå kun Administrator, Rune og Magnus som kan logge seg inn i admin siden)
+### Django og klienter
 
+Django tar imot forespørsler fra klienter, og sender tilbake ett svar i form av en HTML fil. Det som er intressant for oss utviklere, er at django har mulighet til å sende en såkalt ["context"](https://docs.djangoproject.com/en/4.2/ref/templates/api/#:~:text=Rendering%20a%20context%C2%B6). Som i denne sammenhengen vil si at man kan sende variabler fra back-end i Django, og vise disse i nettleseren. Disse contextene er ofte spørringer fra en database. 
 
-![image](https://user-images.githubusercontent.com/106773288/219670423-1b60a81f-96ce-4f71-8eca-a73446161129.png)
-
-
-Når du er logget inn, trenger vi kun å fokusere på dette området.
-
-### Legge til en ny bruker / annsatt 
-For å legge til en ny annsatt på, trykker vi på +Add vedsiden av Users.
+En simplifisert kobling mellom Django og en klient kan visualiseres som følger:
 
 
-![image](https://user-images.githubusercontent.com/106773288/219671321-b1a54776-82ae-4dc5-a20e-723e294110cf.png)
+![image](https://user-images.githubusercontent.com/106773288/232400148-63739002-d41f-4513-9075-9139c5f2cfc0.png)
+
+### Django i detalj
+Videre, så skal veiledningen fordype seg i Django's komunikasjon innad i seg selv. Dette skal vi gjøre ved en intuitiv oppbygning av en ny funskjon i Django prosjektet vårt. Referer [hit](https://docs.djangoproject.com/en/4.2/intro/tutorial01/) for oppstart.
 
 
-Her vil du se brukeroversikten, som er alle brukerne lagret i databasen. For å legge til en ny bruker, se etter ADD USER+ øverst i høyre hjørne
-
-
-![image](https://user-images.githubusercontent.com/106773288/219671699-7a022e94-f803-4e2a-9704-c9517c17ca89.png)
-
-
-Deretter fyller du ut brukernavn og passord. Fint om Rune eller Magnus kommer til vedkommende som det skal lages konto til, slik at vedkommende kan skrive inn sitt eget brukeravn og passord.
-Deretter kommer du til refigeringssiden til brukeren. Du vil goså komme hit om du trykker på brukeren i brukeroversikten. Om du ønsker at den nye brukeren skal ha tilgang til Admin siden, kan du krysse av "Staff Status" under Permissions.
-
-
-![image](https://user-images.githubusercontent.com/106773288/219673102-27bfbb28-bca7-4f8f-ac62-d99657196ecd.png)
-
-
-Under Permissions kan du endre på hvilke grupper som brukeren skal være en del av ved å trykke på gruppen og deretter pilen som peker til høyre, slik at gruppenavnet havnet i boksen til høyre.
-
-![image](https://user-images.githubusercontent.com/106773288/219674586-e835ca9a-54d4-4b51-bb65-2f25cca3737b.png)
+Dette er slik Django prosseserer en forespørsel:
 
 
 
-Trykk deretter på SAVE for å lagre endringene.
+![unnamed0](https://user-images.githubusercontent.com/106773288/232402049-9c605d4c-ac77-453d-a4f7-c8c106add307.svg)
+
+Nå skal vi trinnvis gå gjennom hvordan vi legger til en ny databasemodell i Django, og hvordan vi viser den hos sluttbrukeren.
+
+Filen urls.py router de forskjellige URL 'ene Django mottar til en funskjon i views.py. I dette eksempelet skal vi route URL 'en `/home` til en funskjon som returnerer index.html.
+
+``` PYTHON
+# urls.py
+
+from django.urls import path
+
+from . import views
+
+urlpatterns = [
+path("/home", views.home_view)
+]
+
+```
+
+```PYTHON
+# views.py
+
+from django.shortcuts import render
+
+def home_view(request):
+    return render(request, "home.html", {}) # <- Din context her...
+
+```
+
+Dictionariet, som er det siste parameteret vi passer inn i funskjonen `render`, i views.py er contexten som vi kan be Django sende til klienten. Her binder vi navnet på variabelen vi sender, med verdien på den. for eks;
+
+`{ "brukere" : [bruker1, bruker2, bruker3] }`
 
 
-## Legge til en ny Avdeling / Group
-Start med å trykke på +ADD til høyre for groups
+Vil man lage en ny modell i databasen, og fremvise den for brukeren derimot, må vi lage en database-modell først. Referer til [Django models-dokumentasjon](https://docs.djangoproject.com/en/4.2/topics/db/models/) for oversikt over forskjellige `Field types`. Under er ett eksempel på hvordan vi kan legge til en bok som en rad i databasen.
 
-![image](https://user-images.githubusercontent.com/106773288/219675582-5bc452b1-7cb8-460f-99ac-a9709b79cd84.png)
+![unnamed1](https://user-images.githubusercontent.com/106773288/232408107-38932e10-034a-4b88-ac6c-5e77c22b8d0b.svg)
 
+Slik vil objektet "Bok" se ut.
 
-Skriv deretter inn navnet og trykk på SAVE for å lagre.
+```PYTHON
+# models.py
 
+from django.db import models
 
-## Hvordan legge til nye statuser
+class Bok:
+    tittel = models.CharField(max_length=255)
+    forfatter = models.CharField(max_length=255)
 
-
-Start med å trykke på +ADD til høyre for Statuser
-
-
-![image](https://user-images.githubusercontent.com/106773288/219675898-159e3593-f340-487b-81be-61e589d0fd46.png)
-
-
-Skriv deretter inn navnet på statusen og trykk på SAVE for å lagre. Ettersom farger på statuser ikke er implementert enda, kan du la denne stå som hvit.
+```
 
 
-Ved å kun trykke på enten Statuser, eller Tickets, vil du kunne se en oversikt over alle enhetene av de i databasen. Trykk på en av de for å endre på en spesifik enhet.
+Nå, som vi har laget en modell for hvordan "Bok" skal se ut i databasen, må faktisk legge den til i Django's innebygde database. Dette gjøres ved å kjøre to kommandoer:
+`python manage.py makemigrations` og deretter
+`python manage.py migrate`. Om du ikke får opp noen Error-meldinger etter å ha kjørt disse kommandoene, kan vi gå videre.
 
-![image](https://user-images.githubusercontent.com/106773288/219676520-1c5ded47-60de-4cd2-8a6a-b6bcb9ab6ebc.png)
+For å forenkle prosessen av å legge til en ny bok i databasen, så skal vi registrere modellen i Admin.py.
 
+```PYTHON
+# admin.py
 
-# Legg til ny database enhet
+from django.contrib import admin
+from .models import Bok # Modellen vi nettop lagde!
 
+admin.site.register(Bok)
+```
 
-Her forklares det hvordan man kan legge til nye enheter i databasen
-## Definer modellen i models.py
+Nå skal det være mulig å logge seg inn på admin siden i Django prosjektet ditt, og se "Boks" (Django pluraliserer på engelsk, dette kan endres om du vil det [link](https://stackoverflow.com/questions/2587707/django-fix-admin-plural#:~:text=Well%20well%2C%20it%20seems%20like%20the%20Meta%20class%20approach%20still%20works.%20So%20placing%20a%20meta%20class%20inside%20your%20model%20will%20still%20do%20the%20trick%3A)). Om du trykker add, så kan du legge til nye bok-objekter i databasen. *NB!* Merk at du må ha en superuser definert i Django for å få tilgang til admin panelet. Kjør kommandoen `python manage.py createsuperuser` og fyll inn de ønskede parameterne for å opprette en.
 
-inne i ``server > ticket > models.py`` vil du finne en python representasjon av modellene i databasen. Referer til https://docs.djangoproject.com/en/4.1/ref/models/fields/ for en dybdeforklaring.
+Etter å ha lagt inn ett bar bok-objekter, kan vi gå videre til å faktisk vise de på nettsiden.
 
-For å lage en ny modell, må man lage en klasse som arver egenskapende til en innebygd modul i Django.
+i `views.py` var det andre parameteret `home.html`. Dette er html filen som vi skal sende til brukeren. Først og fremst må vi legge til en `templates` mappe. Referer til [denne](https://docs.djangoproject.com/en/4.2/howto/overriding-templates/) lenken på hvordan det konfigureres. Inne i `/templates` legger vi til en ny fil; `home.html`.
 
+```HTML
+# home.html
 
-![image](https://user-images.githubusercontent.com/106773288/219677610-44fca2b6-5d7e-44e0-9af1-301fb44dc976.png)
+<h1> Alle bøker i databasen </h1>
+{{boker}} <!-- https://docs.djangoproject.com/en/4.2/ref/templates/language/ -->
 
+```
 
-Over ser du Status modellen som blir brukt i nettsiden.
-``__str__`` funskjonen blir brukt for å bestemme hvilket navn som skal vises i databaseoversikten når man ser på enheten.
-``Meta`` Underklassen har en funskjon som endrer pluralet til enhetsnavnet. Slik at det blir "stauser" og ikke "statuss".
+Det siste vi trenger å gjøre da, er å legge til contexten i `views.py`
 
+```PYTHON
+# views.py
 
-For at Django nå skal legge til den nye modellen i Databasen, må du gå inn i ``Consollen`` og ``CD`` inn i plasseringen til ``manage.py`` filen. 
-Deretter må kommandoen ``python manage.py makemigrations`` og ``pyhton manage.py migrate`` kjøres for at databasen skal oppdatere seg. Dette må gjøres hver gang man endrer på noe i models.py filen.
+# views.py
 
-## Registrer Modellen i Admin.py
-I ``server > ticket > Admin.py`` kan du gjøre slik at man kan se modellen og lage nye enheter i databasen av dem i Admin panelet.
+from django.shortcuts import render
+from .models import Bok
 
+def home_view(request):
+    return render(request, "home.html", {"boker" : Bok.objects.all()}) # <- Hent ut alle bøkene i databasen. Unngå ÆØÅ i variabelnavn. (Bøker -> Boker)
 
-![image](https://user-images.githubusercontent.com/106773288/219679607-10d086e1-8e7e-4110-acea-22fbdff69d5d.png)
+```
 
-
-I bildet over starter vi med å importere Django's innebygde admin modul og vår egen modell fra ``server > ticket > models.py`` Deretter registrerer vi de med ``admin.site.register(navn_på_modell)`` funskjonen.
-
-## Lag ett view
-for at django skal kunne svare på en forespørsel så må du fortelle hva den skal gjøre. Dette gjøres ved å gå inn på ``server > ticket > views.py`` og skrive følgende
-
-
-![image](https://user-images.githubusercontent.com/106773288/219680720-8252038c-d9ea-4a70-92ba-756da03a3149.png)
-
-
-i linje 63 henter vi alle statuser i databaser, før vi returnerer en render funskjon hvor vi definerer navnet på HTML filen og Contexten, som kan bli hentet fram i HTML dokumentet. Via å bruke 
-
-``{% for status in statuses %} 
-    {{status.Navn}}
-  {% endfor %} ``
-  
-For binding av URL of View, referer til https://docs.djangoproject.com/en/4.1/intro/tutorial03/
-
-# Forklaring på Design.
-- hvorfor er det ingen forside?
-  Dette er grunnet at dette systemet er bygd opp slik at det kan kobles til en eksisterende nettside, hvorav man redirecter brukeren til registrer ticket URL'en. Det annbefales å ha en 0-linje support side, som hindrer brukere i å registrere en sak før de faktisk har prøvd å løse problemet selv.
-- Dashboardet
-  Dashboardet er bygget opp slik at man kan se viktig informasjon om Ticketen, med mye mellomrom for enkel lesning.
+Gratulerer! Du har nå knyttet sammen en database til en nettside. Django er ett fantastisk rammeverk med massevis av muligheter. God koding!
